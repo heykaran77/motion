@@ -43,11 +43,18 @@ export default function MotionCard() {
             </div>
 
             <div className="flex items-center justify-center">
-              <button
+              <motion.button
+                whileTap={{
+                  scale: 0.95,
+                }}
+                transition={{
+                  duration: 0.1,
+                  ease: 'easeIn',
+                }}
                 onClick={() => setIsOpen(false)}
                 className="bg-neutral-600 font-medium tracking-tight px-2 py-1 cursor-pointer rounded-md text-sm">
                 {isOpen ? 'Close' : 'Reveal'}
-              </button>
+              </motion.button>
             </div>
             <div className="bg-neutral-100 flex-1 rounded-md relative ring ring-neutral-300 overflow-hidden">
               <motion.div
@@ -91,11 +98,18 @@ export default function MotionCard() {
         )}
       </AnimatePresence>
       {!isOpen && (
-        <button
+        <motion.button
+          whileTap={{
+            scale: 0.95,
+          }}
+          transition={{
+            duration: 0.1,
+            ease: 'easeIn',
+          }}
           onClick={() => setIsOpen(true)}
           className="bg-neutral-600 font-medium tracking-tight px-2 py-1 cursor-pointer rounded-md text-sm">
           Reveal
-        </button>
+        </motion.button>
       )}
     </>
   );
