@@ -31,7 +31,19 @@ export function NavMain({
     }[];
   }[];
 }) {
-  const { isMobile } = useSidebar();
+  const { isMobile, state } = useSidebar();
+  const open = state === 'expanded';
+
+  const childVariants = {
+    open: {
+      y: 0,
+      opacity: 1,
+    },
+    close: {
+      y: -20,
+      opacity: 0,
+    },
+  };
 
   return (
     <SidebarGroup>
@@ -40,9 +52,8 @@ export function NavMain({
           <DropdownMenu key={item.title}>
             <SidebarMenuItem asChild>
               <motion.li
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}>
+                variants={childVariants}
+                transition={{ duration: 0.3 }}>
                 <DropdownMenuTrigger asChild>
                   <SidebarMenuButton className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
                     {item.title} <MoreHorizontal className="ml-auto" />

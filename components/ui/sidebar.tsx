@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { motion } from 'motion/react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { PanelLeftIcon } from 'lucide-react';
 import { Slot } from 'radix-ui';
@@ -157,30 +158,39 @@ function Sidebar({
   className,
   children,
   ...props
-}: React.ComponentProps<'div'> & {
+}: React.ComponentProps<typeof motion.div> & {
   side?: 'left' | 'right';
   variant?: 'sidebar' | 'floating' | 'inset';
   collapsible?: 'offcanvas' | 'icon' | 'none';
 }) {
   const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
 
+  const { animate, initial, exit, variants, transition, style, ...restProps } =
+    props as any;
+
   if (collapsible === 'none') {
     return (
-      <div
+      <motion.div
         data-slot="sidebar"
         className={cn(
           'flex h-full w-(--sidebar-width) flex-col bg-sidebar text-sidebar-foreground',
           className,
         )}
-        {...props}>
+        animate={animate}
+        initial={initial}
+        exit={exit}
+        variants={variants}
+        transition={transition}
+        style={style}
+        {...restProps}>
         {children}
-      </div>
+      </motion.div>
     );
   }
 
   if (isMobile) {
     return (
-      <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
+      <Sheet open={openMobile} onOpenChange={setOpenMobile} {...restProps}>
         <SheetContent
           data-sidebar="sidebar"
           data-slot="sidebar"
@@ -203,13 +213,19 @@ function Sidebar({
   }
 
   return (
-    <div
+    <motion.div
       className="group peer hidden text-sidebar-foreground md:block"
       data-state={state}
       data-collapsible={state === 'collapsed' ? collapsible : ''}
       data-variant={variant}
       data-side={side}
-      data-slot="sidebar">
+      data-slot="sidebar"
+      animate={animate}
+      initial={initial}
+      exit={exit}
+      variants={variants}
+      transition={transition}
+      style={style}>
       {/* This is what handles the sidebar gap on desktop */}
       <div
         data-slot="sidebar-gap"
@@ -235,7 +251,7 @@ function Sidebar({
             : 'group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l',
           className,
         )}
-        {...props}>
+        {...restProps}>
         <div
           data-sidebar="sidebar"
           data-slot="sidebar-inner"
@@ -243,7 +259,7 @@ function Sidebar({
           {children}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

@@ -15,6 +15,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  useSidebar,
 } from '@/components/ui/sidebar';
 
 // This is sample data.
@@ -150,26 +151,38 @@ const data = {
 
 const AppSidebarVariant = {
   open: {
-    width: '50rem',
-  },
+    filter: 'blur(0px)',
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.1,
+    },
+  } as any,
   close: {
-    width: '6rem',
-  },
+    filter: 'blur(10px)',
+    transition: {
+      staggerChildren: 0.05,
+      staggerDirection: -1,
+    },
+  } as any,
 };
 
-export function AppSidebar({
-  open,
-  ...props
-}: React.ComponentProps<typeof Sidebar> & { open: boolean }) {
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { state } = useSidebar();
+  const open = state === 'expanded';
+
   return (
-    <Sidebar {...props}>
+    <Sidebar
+      {...props}
+      variants={AppSidebarVariant}
+      initial={false}
+      animate={open ? 'open' : 'close'}
+      transition={{ duration: 0.5 }}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem asChild>
             <motion.li
-              variants={AppSidebarVariant}
-              initial={false}
-              animate={open ? 'open' : 'close'}
+              initial={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
               transition={{ duration: 0.3 }}>
               <SidebarMenuButton size="lg" asChild>
                 <a href="#">
