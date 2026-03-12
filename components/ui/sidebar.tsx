@@ -158,7 +158,8 @@ function Sidebar({
   className,
   children,
   ...props
-}: React.ComponentProps<typeof motion.div> & {
+}: Omit<React.ComponentProps<typeof motion.div>, 'children'> & {
+  children?: React.ReactNode;
   side?: 'left' | 'right';
   variant?: 'sidebar' | 'floating' | 'inset';
   collapsible?: 'offcanvas' | 'icon' | 'none';
