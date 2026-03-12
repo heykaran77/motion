@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, type Variants } from 'motion/react';
 
 interface CardInterface {
   title: string;
@@ -199,7 +199,7 @@ export default function LayoutAnim() {
 
   const ref = useModalClose(() => setCurrent(null));
 
-  const blurRevealVariant = {
+  const blurRevealVariant: Variants = {
     hidden: { filter: 'blur(10px)', opacity: 0, y: 5 },
     visible: (i: number) => ({
       filter: 'blur(0px)',
@@ -211,7 +211,7 @@ export default function LayoutAnim() {
         ease: 'easeOut',
       },
     }),
-  } as const;
+  };
   return (
     <div className="min-h-screen relative max-w-5xl mx-auto py-20 px-4 space-y-12">
       <div className="flex flex-col gap-2">
