@@ -56,7 +56,6 @@ export default function Navbar() {
                   layoutId="hover"
                   transition={{
                     duration: 0.3,
-                    delay: 0,
                   }}
                   className="absolute inset-0 bg-green-900/20 w-full h-full rounded-full ring ring-green-300/50"
                 />
